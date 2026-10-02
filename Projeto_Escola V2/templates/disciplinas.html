@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Disciplinas | Sistema de Gestão Escolar</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header class="cabecalho">
+
+        <div class="cabecalho-conteudo">
+
+            <div class="logo-area">
+                <div class="logo">📚</div>
+
+                <div>
+                    <h1>Sistema de Gestão Escolar</h1>
+                    <p>Gerenciamento de disciplinas</p>
+                </div>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <a href="/" class="botao-voltar">
+            ← Voltar ao início
+        </a>
+
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+
+            {% if mensagens %}
+
+                {% for categoria, mensagem in mensagens %}
+
+                    <div class="mensagem {{ categoria }}">
+                        {{ mensagem }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <section class="titulo-pagina">
+
+            <div>
+
+                <span class="subtitulo">CADASTROS</span>
+
+                <h2>Disciplinas</h2>
+
+                <p>
+                    Cadastre e consulte as disciplinas oferecidas pela escola.
+                </p>
+
+            </div>
+
+
+            <div class="contador">
+
+                <span class="contador-numero">
+                    {{ disciplinas|length }}
+                </span>
+
+                <span class="contador-texto">
+                    disciplina(s) cadastrada(s)
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <section class="card">
+
+            <div class="titulo-secao">
+
+                <div class="icone-secao">
+                    ➕
+                </div>
+
+                <div>
+
+                    <h3>Cadastrar nova disciplina</h3>
+
+                    <p>
+                        Preencha os dados abaixo para adicionar uma disciplina.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form action="/disciplinas/cadastrar" method="POST">
+
+                <div class="linha-formulario">
+
+                    <div class="campo">
+
+                        <label for="nome">
+                            Nome da disciplina
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Ex.: Matemática"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="descricao">
+                            Descrição
+                        </label>
+
+                        <input
+                            type="text"
+                            id="descricao"
+                            name="descricao"
+                            placeholder="Breve descrição da disciplina"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="area-botao">
+
+                    <button
+                        type="submit"
+                        class="botao-principal"
+                    >
+                        Cadastrar disciplina
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <section class="card">
+
+            <div class="titulo-secao">
+
+                <div class="icone-secao">
+                    📋
+                </div>
+
+                <div>
+
+                    <h3>Disciplinas cadastradas</h3>
+
+                    <p>
+                        Confira as disciplinas registradas no sistema.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if disciplinas %}
+
+                <div class="tabela-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+
+                                <th>Disciplina</th>
+
+                                <th>Descrição</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for disciplina in disciplinas %}
+
+                                <tr>
+
+                                    <td>
+
+                                        <span class="id-aluno">
+                                            #{{ disciplina.id }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="nome-aluno">
+
+                                            <div class="avatar">
+                                                {{ disciplina.nome[0]|upper }}
+                                            </div>
+
+                                            <strong>
+                                                {{ disciplina.nome }}
+                                            </strong>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+                                        {{ disciplina.descricao or '-' }}
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="sem-dados">
+
+                    <div class="icone-vazio">
+                        📚
+                    </div>
+
+                    <h3>Nenhuma disciplina cadastrada</h3>
+
+                    <p>
+                        Utilize o formulário acima para cadastrar a primeira disciplina.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            Sistema de Gestão Escolar © 2026
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

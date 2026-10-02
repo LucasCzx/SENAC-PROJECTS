@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Sistema de Gestão Escolar</title>
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+
+<body>
+
+
+    <header class="cabecalho">
+        <h1>Sistema de Gestão Escolar</h1>
+        <p>Organizando a gestão da sua escola</p>
+    </header>
+
+
+    <main class="container">
+
+
+        <h2>Bem-vindo(a) ao sistema!</h2>
+        <p>Selecione um módulo para começar:</p>
+
+
+        <section class="menu">
+
+
+            <a href="/alunos" class="card">
+                <span>👩‍🎓</span>
+                <h3>Alunos</h3>
+                <p>Gerenciar os alunos cadastrados.</p>
+            </a>
+
+
+            <a href="/professores
+            " class="card">
+                <span>👨‍🏫</span>
+                <h3>Professores</h3>
+                <p>Gerenciar os professores da escola.</p>
+            </a>
+
+
+            <a href="/turmas" class="card">
+                <span>🏫</span>
+                <h3>Turmas</h3>
+                <p>Organizar as turmas escolares.</p>
+            </a>
+
+
+            <a href="/disciplinas" class="card">
+                <span>📚</span>
+                <h3>Disciplinas</h3>
+                <p>Consultar as disciplinas cadastradas.</p>
+            </a>
+
+
+        </section>
+
+
+    </main>
+
+
+    <footer>
+        <p>Sistema de Gestão Escolar © 2026</p>
+    </footer>
+
+
+</body>
+</html>

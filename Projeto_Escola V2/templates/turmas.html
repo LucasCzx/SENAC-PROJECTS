@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Turmas | Sistema de Gestão Escolar</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header class="cabecalho">
+
+        <div class="cabecalho-conteudo">
+
+            <div class="logo-area">
+                <div class="logo">🏫</div>
+
+                <div>
+                    <h1>Sistema de Gestão Escolar</h1>
+                    <p>Gerenciamento de turmas</p>
+                </div>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <a href="/" class="botao-voltar">
+            ← Voltar ao início
+        </a>
+
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+
+            {% if mensagens %}
+
+                {% for categoria, mensagem in mensagens %}
+
+                    <div class="mensagem {{ categoria }}">
+                        {{ mensagem }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <section class="titulo-pagina">
+
+            <div>
+
+                <span class="subtitulo">CADASTROS</span>
+
+                <h2>Turmas</h2>
+
+                <p>
+                    Cadastre e consulte as turmas da escola.
+                </p>
+
+            </div>
+
+
+            <div class="contador">
+
+                <span class="contador-numero">
+                    {{ turmas|length }}
+                </span>
+
+                <span class="contador-texto">
+                    turma(s) cadastrada(s)
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <section class="card">
+
+            <div class="titulo-secao">
+
+                <div class="icone-secao">
+                    ➕
+                </div>
+
+                <div>
+
+                    <h3>Cadastrar nova turma</h3>
+
+                    <p>
+                        Preencha os dados abaixo para adicionar uma turma.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form action="/turmas/cadastrar" method="POST">
+
+                <div class="linha-formulario">
+
+                    <div class="campo">
+
+                        <label for="nome">
+                            Nome da turma
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Ex.: 1º Ano A"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="serie">
+                            Série / Ano
+                        </label>
+
+                        <input
+                            type="text"
+                            id="serie"
+                            name="serie"
+                            placeholder="Ex.: 1º Ano do Ensino Médio"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="linha-formulario">
+
+                    <div class="campo">
+
+                        <label for="turno">
+                            Turno
+                        </label>
+
+                        <select id="turno" name="turno">
+                            <option value="">Selecione o turno</option>
+                            <option value="Manhã">Manhã</option>
+                            <option value="Tarde">Tarde</option>
+                            <option value="Noite">Noite</option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="ano_letivo">
+                            Ano letivo
+                        </label>
+
+                        <input
+                            type="number"
+                            id="ano_letivo"
+                            name="ano_letivo"
+                            placeholder="2026"
+                            min="2000"
+                            max="2100"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="area-botao">
+
+                    <button
+                        type="submit"
+                        class="botao-principal"
+                    >
+                        Cadastrar turma
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <section class="card">
+
+            <div class="titulo-secao">
+
+                <div class="icone-secao">
+                    📋
+                </div>
+
+                <div>
+
+                    <h3>Turmas cadastradas</h3>
+
+                    <p>
+                        Confira as turmas registradas no sistema.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if turmas %}
+
+                <div class="tabela-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+
+                                <th>Turma</th>
+
+                                <th>Série / Ano</th>
+
+                                <th>Turno</th>
+
+                                <th>Ano letivo</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for turma in turmas %}
+
+                                <tr>
+
+                                    <td>
+
+                                        <span class="id-aluno">
+                                            #{{ turma.id }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="nome-aluno">
+
+                                            <div class="avatar">
+                                                {{ turma.nome[0]|upper }}
+                                            </div>
+
+                                            <strong>
+                                                {{ turma.nome }}
+                                            </strong>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+                                        {{ turma.serie or '-' }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ turma.turno or '-' }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ turma.ano_letivo or '-' }}
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="sem-dados">
+
+                    <div class="icone-vazio">
+                        🏫
+                    </div>
+
+                    <h3>Nenhuma turma cadastrada</h3>
+
+                    <p>
+                        Utilize o formulário acima para cadastrar a primeira turma.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            Sistema de Gestão Escolar © 2026
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Professores | Sistema de Gestão Escolar</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header class="cabecalho">
+
+        <div class="cabecalho-conteudo">
+
+            <div class="logo-area">
+
+                <div class="logo">
+                    👨‍🏫
+                </div>
+
+                <div>
+                    <h1>Sistema de Gestão Escolar</h1>
+                    <p>Gerenciamento de professores</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <a href="/" class="botao-voltar">
+            ← Voltar ao início
+        </a>
+
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+
+            {% if mensagens %}
+
+                {% for categoria, mensagem in mensagens %}
+
+                    <div class="mensagem {{ categoria }}">
+                        {{ mensagem }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <section class="titulo-pagina">
+
+            <div>
+
+                <span class="subtitulo">
+                    CADASTROS
+                </span>
+
+                <h2>
+                    Professores
+                </h2>
+
+                <p>
+                    Cadastre e consulte os professores da escola.
+                </p>
+
+            </div>
+
+
+            <div class="contador">
+
+                <span class="contador-numero">
+                    {{ professores|length }}
+                </span>
+
+                <span class="contador-texto">
+                    professor(es) cadastrado(s)
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <section class="card">
+
+            <div class="titulo-secao">
+
+                <div class="icone-secao">
+                    ➕
+                </div>
+
+                <div>
+
+                    <h3>
+                        Cadastrar novo professor
+                    </h3>
+
+                    <p>
+                        Preencha os dados abaixo para adicionar um professor.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form action="/professores/cadastrar" method="POST">
+
+                <div class="linha-formulario">
+
+                    <div class="campo">
+
+                        <label for="nome">
+                            Nome completo
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Digite o nome completo"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="especialidade">
+                            Especialidade
+                        </label>
+
+                        <input
+                            type="text"
+                            id="especialidade"
+                            name="especialidade"
+                            placeholder="Ex.: Matemática"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="linha-formulario">
+
+                    <div class="campo">
+
+                        <label for="email">
+                            E-mail
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="exemplo@email.com"
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="telefone">
+                            Telefone
+                        </label>
+
+                        <input
+                            type="text"
+                            id="telefone"
+                            name="telefone"
+                            placeholder="(84) 99999-9999"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="area-botao">
+
+                    <button
+                        type="submit"
+                        class="botao-principal"
+                    >
+                        Cadastrar professor
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+
+        <section class="card">
+
+            <div class="titulo-secao">
+
+                <div class="icone-secao">
+                    👨‍🏫
+                </div>
+
+                <div>
+
+                    <h3>
+                        Professores cadastrados
+                    </h3>
+
+                    <p>
+                        Confira os professores registrados no sistema.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            {% if professores %}
+
+                <div class="tabela-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+
+                                <th>Nome</th>
+
+                                <th>E-mail</th>
+
+                                <th>Telefone</th>
+
+                                <th>Especialidade</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for professor in professores %}
+
+                                <tr>
+
+                                    <td>
+
+                                        <span class="id-aluno">
+                                            #{{ professor.id }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="nome-aluno">
+
+                                            <div class="avatar">
+                                                {{ professor.nome[0]|upper }}
+                                            </div>
+
+                                            <strong>
+                                                {{ professor.nome }}
+                                            </strong>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+                                        {{ professor.email or '-' }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ professor.telefone or '-' }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ professor.especialidade or '-' }}
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="sem-dados">
+
+                    <div class="icone-vazio">
+                        👨‍🏫
+                    </div>
+
+                    <h3>
+                        Nenhum professor cadastrado
+                    </h3>
+
+                    <p>
+                        Utilize o formulário acima para cadastrar o primeiro professor.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+
+
+    <footer>
+
+        <p>
+            Sistema de Gestão Escolar © 2026
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>

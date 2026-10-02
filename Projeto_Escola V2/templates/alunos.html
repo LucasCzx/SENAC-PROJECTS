@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Alunos | Sistema de Gestão Escolar</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header class="cabecalho">
+
+        <div class="cabecalho-conteudo">
+
+            <div class="logo-area">
+                <div class="logo">🎓</div>
+
+                <div>
+                    <h1>Sistema de Gestão Escolar</h1>
+                    <p>Gerenciamento de alunos</p>
+                </div>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <a href="/" class="botao-voltar">
+            ← Voltar ao início
+        </a>
+
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+
+            {% if mensagens %}
+
+                {% for categoria, mensagem in mensagens %}
+
+                    <div class="mensagem {{ categoria }}">
+                        {{ mensagem }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <section class="titulo-pagina">
+
+            <div>
+
+                <span class="subtitulo">CADASTROS</span>
+
+                <h2>Alunos</h2>
+
+                <p>
+                    Cadastre, consulte e gerencie os alunos da escola.
+                </p>
+
+            </div>
+
+
+            <div class="contador">
+
+                <span class="contador-numero">
+                    {{ alunos|length }}
+                </span>
+
+                <span class="contador-texto">
+                    aluno(s) cadastrado(s)
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <section class="card">
+
+            <div class="titulo-secao">
+
+                <div class="icone-secao">
+                    ➕
+                </div>
+
+                <div>
+
+                    <h3>Cadastrar novo aluno</h3>
+
+                    <p>
+                        Preencha os dados abaixo para adicionar um aluno.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form action="/alunos/cadastrar" method="POST">
+
+                <div class="linha-formulario">
+
+
+                    <div class="campo">
+
+                        <label for="nome">
+                            Nome completo
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Digite o nome completo"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="data_nascimento">
+                            Data de nascimento
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data_nascimento"
+                            name="data_nascimento"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="linha-formulario">
+
+
+                    <div class="campo">
+
+                        <label for="email">
+                            E-mail
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="exemplo@email.com"
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="telefone">
+                            Telefone
+                        </label>
+
+                        <input
+                            type="text"
+                            id="telefone"
+                            name="telefone"
+                            placeholder="(84) 99999-9999"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="area-botao">
+
+                    <button
+                        type="submit"
+                        class="botao-principal"
+                    >
+                        Cadastrar aluno
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+
+        <section class="card">
+
+            <div class="titulo-secao">
+
+                <div class="icone-secao">
+                    📋
+                </div>
+
+                <div>
+
+                    <h3>Alunos cadastrados</h3>
+
+                    <p>
+                        Confira os alunos registrados no sistema.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            {% if alunos %}
+
+                <div class="tabela-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+
+                                <th>Nome</th>
+
+                                <th>Data de nascimento</th>
+
+                                <th>E-mail</th>
+
+                                <th>Telefone</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for aluno in alunos %}
+
+                                <tr>
+
+                                    <td>
+
+                                        <span class="id-aluno">
+                                            #{{ aluno.id }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="nome-aluno">
+
+                                            <div class="avatar">
+                                                {{ aluno.nome[0]|upper }}
+                                            </div>
+
+                                            <strong>
+                                                {{ aluno.nome }}
+                                            </strong>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+                                        {{ aluno.data_nascimento or '-' }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ aluno.email or '-' }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ aluno.telefone or '-' }}
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="sem-dados">
+
+                    <div class="icone-vazio">
+                        👩‍🎓
+                    </div>
+
+                    <h3>Nenhum aluno cadastrado</h3>
+
+                    <p>
+                        Utilize o formulário acima para cadastrar o primeiro aluno.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+
+
+    <footer>
+
+        <p>
+            Sistema de Gestão Escolar © 2026
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>

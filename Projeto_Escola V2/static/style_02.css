@@ -1,0 +1,153 @@
+/* =========================================================
+   COMPLEMENTO — adicionar ao final do style.css
+   (classes usadas nas páginas, mas ainda não definidas)
+   ========================================================= */
+
+/* Cabeçalho com logo */
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-align: left;
+}
+
+.logo {
+    font-size: 36px;
+}
+
+/* Subtítulo da página */
+
+.subtitulo {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #1f4e79;
+}
+
+/* Contador (os templates usam estas classes) */
+
+.contador-numero {
+    font-size: 25px;
+    font-weight: bold;
+    color: #1f4e79;
+}
+
+.contador-texto {
+    font-size: 13px;
+    color: #777;
+    text-align: center;
+}
+
+/* Cards de formulário/tabela dentro das páginas de cadastro */
+
+section.card {
+    margin-bottom: 30px;
+}
+
+section.card:hover {
+    transform: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Título das seções com ícone */
+
+.titulo-secao {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.icone-secao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background-color: #eef3f8;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.titulo-secao h3 {
+    color: #1f4e79;
+    margin-bottom: 4px;
+}
+
+/* Linha do formulário (duas colunas) */
+
+.linha-formulario {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 18px;
+}
+
+/* Campo select (mesmo visual dos inputs) */
+
+.campo select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d4d4d4;
+    border-radius: 7px;
+    font-size: 15px;
+    background-color: white;
+    outline: none;
+    transition: 0.2s;
+}
+
+.campo select:focus {
+    border-color: #1f4e79;
+    box-shadow: 0 0 0 3px rgba(31, 78, 121, 0.10);
+}
+
+/* Botão do formulário sem herdar o estilo genérico */
+
+form .botao-principal {
+    margin-top: 0;
+}
+
+/* Tabela dentro do card */
+
+.tabela-container {
+    padding: 0;
+    margin-bottom: 0;
+    box-shadow: none;
+    overflow-x: auto;
+}
+
+/* Nome com avatar */
+
+.nome-aluno {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background-color: #1f4e79;
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Estado vazio */
+
+.icone-vazio {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 700px) {
+    .linha-formulario {
+        grid-template-columns: 1fr;
+    }
+}
